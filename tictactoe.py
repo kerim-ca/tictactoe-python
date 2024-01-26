@@ -3,7 +3,8 @@ class Tictactoe:
     def __init__(self):
         self.current_player = "X"
         self.board = ["-","-","-","-","-","-","-","-","-"]
-        self.game_over = False
+        self.is_tie = False
+        self.is_win = False
     
         
         
@@ -36,16 +37,18 @@ class Tictactoe:
     #checks for a win
     def check_win(self):
         if self.check_horizontal(self.current_player) or self.check_vertical(self.current_player) or self.check_diagonal(self.current_player):
-            self.game_over = True
+            self.is_win = True
+            
     
     #checks for a tie
     def check_tie(self):
-        if "-" not in self.board:
-            self.game_over = True
+        if ("-" not in self.board) and (not self.is_win):
+            self.is_tie = True
+            
             
     #checks if game is over
     def check_game_over(self):
-        return self.game_over
+        return(self.is_tie or self.is_win)
     
     #switches player
     def switch_player(self):
@@ -82,7 +85,10 @@ class Tictactoe:
             self.switch_player()
             self.print_board()
         self.print_board()
-        print(f"winner is {self.current_player}")
+        if self.is_win:
+            print(f"winner is {self.current_player}")
+        elif self.is_tie:
+            print("it's a tie")
         
     
 
@@ -92,4 +98,3 @@ new_ttc = Tictactoe()
 print("Tic-tac-toe!")
 new_ttc.print_board()
 new_ttc.game_controller()
-
